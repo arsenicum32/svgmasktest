@@ -105,8 +105,7 @@ var inte = setInterval(function (_) {
   i++;
 }, 100);
 
-//init(2, 2, is.mobile())
-
 $(window).on('resize', function (_) {
+  console.log("test call")
   return init(6, 6, is.mobile());
 });
