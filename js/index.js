@@ -8,8 +8,8 @@ function init(ii, iii, mobile) {
   $("#fig").remove();
   $("#canvas").remove();
 
-  var it = ii < 0 ? 0 : (typeof ii === "undefined" ? "undefined" : _typeof(ii)) == _typeof(1) ? ii || 6 : 6;
-  var itt = iii < 0 ? 0 : (typeof iii === "undefined" ? "undefined" : _typeof(iii)) == _typeof(1) ? iii || 6 : 6;
+  var it = ii <= 0 ? 0 : (typeof ii === "undefined" ? "undefined" : _typeof(ii)) == _typeof(1) ? ii || 6 : 6;
+  var itt = iii <= 0 ? 0 : (typeof iii === "undefined" ? "undefined" : _typeof(iii)) == _typeof(1) ? iii || 6 : 6;
   var h = window.innerHeight - (mobile ? 120 : 0),
       //$('#main').height()
   w = window.innerWidth,
