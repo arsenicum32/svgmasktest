@@ -1,0 +1,68 @@
+#main {
+  position: relative;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100vw;
+  display: block;
+  overflow: hidden;
+}
+body,
+html {
+  font-family: 'Roboto', sans-serif;
+  width: 100vw;
+  height: 100vh;
+  margin: 0;
+}
+#canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+#fig {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 10;
+}
+#clip {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+#clip circle {
+  fill: #000;
+}
+#clip text {
+  text-anchor: middle;
+}
+#clip mask rect {
+  fill: #fff;
+}
+#clip > rect {
+  -webkit-mask: url("#mask");
+  -webkit-mask-repeat: no-repeat;
+  mask: url("#mask");
+}
+#video {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: auto;
+  height: auto;
+  z-index: -1;
+  transform: translate3d(0, 0, -1px);
+  -webkit-transform: translate3d(0, 0, -1px);
+  background-size: cover;
+  overflow: hidden;
+}
+@media (orientation: portrait) {
+  #video {
+    min-height: 100vh;
+  }
+}
+@media (orientation: landscape) {
+  #video {
+    min-width: 100vw;
+  }
+}
