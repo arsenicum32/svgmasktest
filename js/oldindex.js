@@ -1,20 +1,8 @@
 "use strict";
 
-
-
-// если браузер не поддерживает typeof
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
 
-// док функции
-/*init(
-   int [0-6] (сколько видео кругов),
-   int [0-6] (сколько синих), {
-  mobile: bool (мобильная версия)
-  padding: int (отступ в px),
-  hidden: bool (скрыть ли надпись)
-}) */
-
-function init(ii, iii, m) {
+function init(ii, iii, mobile) {
 
   $("#clip").remove();
   $("#fig").remove();
@@ -22,7 +10,7 @@ function init(ii, iii, m) {
 
   var it = ii <= 0 ? 0 : (typeof ii === "undefined" ? "undefined" : _typeof(ii)) == _typeof(1) ? ii || 6 : 6;
   var itt = iii <= 0 ? 0 : (typeof iii === "undefined" ? "undefined" : _typeof(iii)) == _typeof(1) ? iii || 6 : 6;
-  var h = window.innerHeight - (m.mobile ? m.padding || 120 : 0),
+  var h = window.innerHeight - (mobile ? 120 : 0),
       //$('#main').height()
   w = window.innerWidth,
       //$('#main').width()
@@ -45,8 +33,8 @@ function init(ii, iii, m) {
 
   console.log(w + ' ' + h);
 
-  if (m.mobile) {
-    $("#video").remove(); // если юзать vide это можно удалить...
+  if (mobile) {
+    $("#video").remove();
     $('#main').prepend("<canvas id=\"canvas\" width=\"" + w + "px\" height=\"" + h + "px\">");
   }
 
@@ -55,18 +43,13 @@ function init(ii, iii, m) {
 
   var defs = '',
       mask = '',
-      fig = '',
-      XX,
-      YY;
+      fig = '';
 
-  if (m.mobile || it < 6 && itt) {
+  if (mobile || it < 6 && itt) {
     for (var n = 0; n < q + 1; n++) {
-      for (var i = m.mobile ? 0 : it; i < itt; i++) {
-        if (i == 4) {
-          YY = .05 * h + d * Math.pow(i, sq);
-          XX = pd;
-        }
-        if (w > 1100 && i == 4 && n < 4) {} else { // тут можно поменять разрешение...
+      for (var i = mobile ? 0 : it; i < itt; i++) {
+        if (w > 1100 && i == 4 && n < 4) {} else {
+          //var X = pd + n * (w - pd * 2) / q;
           var X = n == 0 ? pd : n == q ? w - pd - xd : pd + B * n / q;
           var Y = .05 * h + d * Math.pow(i, sq);
           if (i == 3) {
@@ -75,7 +58,7 @@ function init(ii, iii, m) {
           if (i == 4) {
             Y -= 7;
           }
-          if (m.mobile && ctx) {
+          if (mobile && ctx) {
             ctx.fillStyle = "blue";
             ctx.beginPath();
             ctx.arc(X + d, Y + d, d, 0, 2 * Math.PI);
@@ -89,25 +72,14 @@ function init(ii, iii, m) {
     }
   }
 
-  if (true) {
-    if (w < 1110) { // тут можно поменять разрешение...
-      $('#label').css('display', 'none');
-    } else {
-      if (m.hidden) {} else {
-        $('#label').css('display', 'block');
-        $('#label').css('top', YY + "px");
-        $('#label').css('left', XX + "px");
-        $('#label').css('width', xd * 3 + "px");
-      }
-    }
-  }
-
   for (var n = 0; n < q + 1; n++) {
     for (var i = 0; i < it; i++) {
-      if (w > 1100 && i == 4 && n < 4) {} else { // тут можно поменять разрешение...
+      if (w > 1100 && i == 4 && n < 4) {} else {
+        //var X = px+n*xd;
+        //var X = (n == q - 1 ? w - pd - d * 2 : pd + n * (w - pd * 2) / q);
         var X = n == 0 ? pd : n == q ? w - pd - xd : pd + B * n / q;
         var Y = .05 * h + d * Math.pow(i, sq);
-        if (i == 3) { // тут мы двигаем круги по вертикали...
+        if (i == 3) {
           Y -= 7;
         }
         if (i == 4) {
@@ -119,25 +91,21 @@ function init(ii, iii, m) {
     }
   }
 
-  if (!m.mobile) {
+  if (!mobile) {
     $('#main').prepend("\n  <svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 " + w + " " + h + "\" width=\"" + w + "px\" id=\"clip\" height=\"" + h + "px\" preserveAspectRatio=\"xMidYMid slice\">\n  <defs>\n    " + defs + "\n  </defs>\n  <mask id=\"mask\" x=\"0\" y=\"0\" width=\"" + w + "\" height=\"" + h + "\" >\n     <rect x=\"0\" y=\"0\" width=\"" + w + "\" height=\"" + h + "\"/>\n     " + mask + "\n  </mask>\n  <rect x=\"0\" y=\"0\" width=\"" + w + "\" height=\"" + h + "\" fill=\"white\" />\n</svg>\n<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 " + w + " " + h + "\" width=\"" + w + "px\" id=\"fig\" height=\"" + h + "px\" preserveAspectRatio=\"xMidYMid slice\">\n  " + fig + "\n</svg>\n  ");
   }
 }
 
-(function(){
-  var i = 0;
-  var inte = setInterval(function (_) {
-    var delay = 10;
-    i == 15 + delay ? clearInterval(inte) : void 0;
-    var time = i - 3;
-    init(time - 6 + delay >= time + 6 + delay ? 6 : time - 6 - delay, time >= 6 ? 6 : time, {
-      mobile: is.mobile(),
-      hidden: time <= 4
-    });
-    i++;
-  }, 100);
-})();
+var i = 0;
+var inte = setInterval(function (_) {
+  var delay = 10;
+  i == 15 + delay ? clearInterval(inte) : void 0;
+  var time = i - 3;
+  init(time - 6 + delay > time + 6 + delay ? 6 : time - 6 - delay, time > 6 ? 6 : time, is.mobile());
+  i++;
+}, 100);
 
 $(window).on('resize', function (_) {
-  return init(6, 6, { mobile: is.mobile() });
+  console.log("test call")
+  return init(6, 6, is.mobile());
 });
