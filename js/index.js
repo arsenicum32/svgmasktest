@@ -12,6 +12,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
   mobile: bool (мобильная версия)
   padding: int (отступ в px),
   hidden: bool (скрыть ли надпись)
+  max: int [1100] (когда скрывать или показывать надпись...)
 }) */
 
 function init(ii, iii, m) {
@@ -22,6 +23,7 @@ function init(ii, iii, m) {
 
   var it = ii <= 0 ? 0 : (typeof ii === "undefined" ? "undefined" : _typeof(ii)) == _typeof(1) ? ii || 6 : 6;
   var itt = iii <= 0 ? 0 : (typeof iii === "undefined" ? "undefined" : _typeof(iii)) == _typeof(1) ? iii || 6 : 6;
+  var maxwidth = m.max || 1100;
   var h = window.innerHeight - (m.mobile ? m.padding || 120 : 0),
       //$('#main').height()
   w = window.innerWidth,
@@ -66,7 +68,7 @@ function init(ii, iii, m) {
           YY = .05 * h + d * Math.pow(i, sq);
           XX = pd;
         }
-        if (w > 1100 && i == 4 && n < 4) {} else { // тут можно поменять разрешение...
+        if (w > maxwidth && i == 4 && n < 4) {} else { // тут можно поменять разрешение...
           var X = n == 0 ? pd : n == q ? w - pd - xd : pd + B * n / q;
           var Y = .05 * h + d * Math.pow(i, sq);
           if (i == 3) {
@@ -89,26 +91,13 @@ function init(ii, iii, m) {
     }
   }
 
-  if (true) {
-    if (w < 1110) { // тут можно поменять разрешение...
-      $('#label').css('display', 'none');
-    } else {
-      if (m.hidden) {} else {
-        $('#label').css('display', 'block');
-        $('#label').css('top', YY + "px");
-        $('#label').css('left', XX + "px");
-        $('#label').css('width', xd * 3 + "px");
-      }
-    }
-  }
-
   for (var n = 0; n < q + 1; n++) {
     for (var i = 0; i < it; i++) {
       if (i == 4) {
         YY = .05 * h + d * Math.pow(i, sq);
         XX = pd;
       }
-      if (w > 1100 && i == 4 && n < 4) {} else { // тут можно поменять разрешение...
+      if (w > maxwidth && i == 4 && n < 4) {} else { // тут можно поменять разрешение...
         var X = n == 0 ? pd : n == q ? w - pd - xd : pd + B * n / q;
         var Y = .05 * h + d * Math.pow(i, sq);
         if (i == 3) { // тут мы двигаем круги по вертикали...
@@ -120,6 +109,19 @@ function init(ii, iii, m) {
         defs += "<rect id=\"circle" + (i + "n" + n) + "\" x=\"" + X + "\" y=\"" + Y + "\" width=\"" + 2 * d + "\" height=\"" + 2 * d + "\" rx=\"50%\" ry=\"50%\" />";
         mask += "<use xlink:href=\"#circle" + (i + "n" + n) + "\" fill=\"Black\" />";
       }
+    }
+  }
+
+  if (w < maxwidth) { // тут можно поменять разрешение...
+    $('#label').css('display', 'none');
+  } else {
+    if (m.hidden) {} else {  // тут весь css созданного h1 елемента...
+      $('#label').css('display', 'block');
+      $('#label').css('top', (YY - 20) + "px");
+      $('#label').css('left', XX + "px");
+      $('#label').css('width', xd * 4 + "px");
+      $('#label').css('height', xd + "px");
+      $('#label').css('font-size', d + "px");
     }
   }
 
