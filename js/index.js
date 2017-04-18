@@ -104,6 +104,10 @@ function init(ii, iii, m) {
 
   for (var n = 0; n < q + 1; n++) {
     for (var i = 0; i < it; i++) {
+      if (i == 4) {
+        YY = .05 * h + d * Math.pow(i, sq);
+        XX = pd;
+      }
       if (w > 1100 && i == 4 && n < 4) {} else { // тут можно поменять разрешение...
         var X = n == 0 ? pd : n == q ? w - pd - xd : pd + B * n / q;
         var Y = .05 * h + d * Math.pow(i, sq);
